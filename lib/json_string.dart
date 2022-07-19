@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'data.dart';
 
@@ -11,7 +9,7 @@ class JsonString extends StatefulWidget {
 }
 
 class _JsonStringState extends State<JsonString> {
-  List<Map<String, dynamic>>? images;
+  List<Map<String, dynamic>>? hits;
 
   @override
   void initState() {
@@ -22,7 +20,7 @@ class _JsonStringState extends State<JsonString> {
   }
 
   Future initData() async {
-    images = await getImages();
+    hits = await gethits();
 
     setState(() {});
   }
@@ -54,7 +52,7 @@ class _JsonStringState extends State<JsonString> {
                 ),
               ),
             ),
-            images == null
+            hits == null
             ? const CircularProgressIndicator()
             : GridView.builder(
                 gridDelegate:
@@ -65,7 +63,7 @@ class _JsonStringState extends State<JsonString> {
                 itemCount: 50, //임의로 테스트
                 //itemCount: images!.length,
                 itemBuilder: (BuildContext context, index) {
-                  Map<String, dynamic> image = images![index];
+                  Map<String, dynamic> image = hits![index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(
@@ -93,17 +91,7 @@ class _JsonStringState extends State<JsonString> {
         );
   }
 
-  Future<Map<String, dynamic>> getData() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    String jsonString = '{"name": "홍길동", "email": "aaa@aaa.com"}';
-
-    Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-
-    return jsonMap;
-  }
-
-  Future<List<Map<String, dynamic>>> getImages() async {
+  Future<List<Map<String, dynamic>>> gethits() async {
     await Future.delayed(const Duration(seconds: 2));
     List<Map<String, dynamic>> hits = data['hits'];
 
