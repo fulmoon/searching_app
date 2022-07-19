@@ -20,7 +20,7 @@ class _JsonStringState extends State<JsonString> {
   }
 
   Future initData() async {
-    hits = await gethits();
+    hits = await getHits();
 
     setState(() {});
   }
@@ -91,7 +91,7 @@ class _JsonStringState extends State<JsonString> {
         );
   }
 
-  Future<List<Map<String, dynamic>>> gethits() async {
+  Future<List<Map<String, dynamic>>> getHits() async {
     await Future.delayed(const Duration(seconds: 2));
     List<Map<String, dynamic>> hits = data['hits'];
 
