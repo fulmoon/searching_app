@@ -57,11 +57,11 @@ class _JsonStringState extends State<JsonString> {
             : GridView.builder(
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                ),
-                itemCount: 50, //임의로 테스트
-                //itemCount: images!.length,
+                      crossAxisCount: 2,
+                      childAspectRatio: 1,
+                    ),
+                itemCount: hits!.length,
+                //itemCount: 50, //임의로 테스트
                 itemBuilder: (BuildContext context, index) {
                   Map<String, dynamic> image = hits![index];
                   return Padding(
@@ -74,8 +74,8 @@ class _JsonStringState extends State<JsonString> {
                       ),
                     ),
                   );
-                }
-              ),
+                },
+            ),
           ],
         )
 
