@@ -12,7 +12,7 @@ class JsonString extends StatefulWidget {
 class _JsonStringState extends State<JsonString> {
   Map<String, dynamic>? person;
 
-  List<Map<String, dynamic>> images = [];
+  List<Map<String, dynamic>>? images;
 
   @override
   void initState() {
@@ -52,10 +52,12 @@ class _JsonStringState extends State<JsonString> {
               ),
             ),
           ),
-          Expanded(
+          images == null
+          ?const CircularProgressIndicator()
+          :Expanded(
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
-                Map<String, dynamic> image = images[index];
+                Map<String, dynamic> image = images![index];
 
                 return Image.network(image['previewURL']);
               },
