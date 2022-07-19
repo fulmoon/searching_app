@@ -31,21 +31,22 @@ class _JsonStringState extends State<JsonString> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('이미지 검색 앱',
+        style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: Column(
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
-            child: Text(
-              "이미지 검색 앱",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
-               // border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),  //border color 적용 안됨
+                border: OutlineInputBorder(),  //border color 적용 안됨
+                //border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),  //border color 적용 안됨
                 labelText: 'Search',
                 suffixIcon: Icon(Icons.search_outlined),
               ),
