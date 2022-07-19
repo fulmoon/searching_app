@@ -23,8 +23,6 @@ class _JsonStringState extends State<JsonString> {
   }
 
   Future initData() async {
-    person = await getData();
-
     images = await getImages();
 
     setState(() {});
@@ -33,29 +31,36 @@ class _JsonStringState extends State<JsonString> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Searching App'),
-      ), //AppBar
-      body: Center(
-        child: person == null
-            ? const CircularProgressIndicator()
-            : Column(
-                children: [
-                  Text(
-                    "이름은 ${person!['name']} 이고, 이메일은 ${person!['email']} 입니다.",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        Map<String, dynamic> image = images[index];
-
-                        return Image.network(image['previewURL']);
-                      },
-                    ),
-                  ),
-                ],
+      body: Column(
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
+            child: Text(
+              "이미지 검색 앱",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+               // border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),  //border color 적용 안됨
+                labelText: 'Search',
+                suffixIcon: Icon(Icons.search_outlined),
               ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                Map<String, dynamic> image = images[index];
+
+                return Image.network(image['previewURL']);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
