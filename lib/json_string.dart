@@ -54,7 +54,7 @@ class _JsonStringState extends State<JsonString> {
         body: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 70),       //Appbar와 겹쳐 보이는 문제 발생.
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),       //Appbar와 겹쳐 보이는 문제 발생.
               child: TextField(       //샘플코드
                 controller: _controller,
                 onSubmitted: (String value) async {
