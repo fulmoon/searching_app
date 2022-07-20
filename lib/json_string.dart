@@ -15,6 +15,11 @@ class _JsonStringState extends State<JsonString> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies(){
+    super.didChangeDependencies();
 
     initData();
   }
@@ -39,42 +44,47 @@ class _JsonStringState extends State<JsonString> {
         ),
         body: Column(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   //border color 적용 안됨
-                  //border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),  //border color 적용 안됨
+                  //border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),
                   labelText: 'Search',
-                  suffixIcon: Icon(Icons.search_outlined),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        const CircularProgressIndicator();
+                      });
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
                 ),
               ),
             ),
-            hits == null
-            ? const CircularProgressIndicator()
-            : GridView.builder(
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1,
+           GridView.builder(
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                  ),
+              itemCount: hits!.length,
+              //itemCount: 50, //임의로 테스트
+              itemBuilder: (BuildContext context, index) {
+                Map<String, dynamic> image = hits![index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.network(
+                      image['previewURL'],
+                      fit: BoxFit.cover,
                     ),
-                itemCount: hits!.length,
-                //itemCount: 50, //임의로 테스트
-                itemBuilder: (BuildContext context, index) {
-                  Map<String, dynamic> image = hits![index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.network(
-                        image['previewURL'],
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
+                  ),
+                );
+              },
             ),
           ],
         )
