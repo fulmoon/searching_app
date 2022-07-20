@@ -10,8 +10,8 @@ class JsonString extends StatefulWidget {
 
 class _JsonStringState extends State<JsonString> {
 
-  late TextEditingController _controller;
-  late List<Map<String, dynamic>> hits;
+  TextEditingController _controller = TextEditingController();
+  List<Map<String, dynamic>> hits= [];
 
   @override
   void initState() {
@@ -94,28 +94,30 @@ class _JsonStringState extends State<JsonString> {
                 ),
               ),
             ),
-           GridView.builder(
-              gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1,
-                  ),
-              itemCount: hits.length,
-              //itemCount: 50, //임의로 테스트
-              itemBuilder: (BuildContext context, index) {
-                Map<String, dynamic> image = hits[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.network(
-                      image['previewURL'],
-                      fit: BoxFit.cover,
+           Expanded(
+             child: GridView.builder(
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1,
                     ),
-                  ),
-                );
-              },
-            ),
+                itemCount: hits.length,
+                //itemCount: 50, //임의로 테스트
+                itemBuilder: (BuildContext context, index) {
+                  Map<String, dynamic> image = hits[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.network(
+                        image['previewURL'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+              ),
+           ),
           ],
         )
 
