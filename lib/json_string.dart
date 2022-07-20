@@ -9,12 +9,15 @@ class JsonString extends StatefulWidget {
 }
 
 class _JsonStringState extends State<JsonString> {
-  List<Map<String, dynamic>>? hits;
+
+  late TextEditingController _controller;
+  late List<Map<String, dynamic>> hits;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _controller = TextEditingController();
   }
 
   @override
@@ -22,6 +25,12 @@ class _JsonStringState extends State<JsonString> {
     super.didChangeDependencies();
 
     initData();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future initData() async {
@@ -45,8 +54,30 @@ class _JsonStringState extends State<JsonString> {
         body: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 70),       //Appbar와 겹쳐 보이는 문제 발생.
+              child: TextField(       //샘플코드
+                controller: _controller,
+                onSubmitted: (String value) async {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Thanks!'),
+                        content: Text(
+                            'You typed "$value", which has length ${value.characters.length}.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              //const CircularProgressIndicator();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 obscureText: true,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
@@ -56,7 +87,6 @@ class _JsonStringState extends State<JsonString> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        const CircularProgressIndicator();
                       });
                     },
                     icon: const Icon(Icons.search),
@@ -70,10 +100,10 @@ class _JsonStringState extends State<JsonString> {
                     crossAxisCount: 2,
                     childAspectRatio: 1,
                   ),
-              itemCount: hits!.length,
+              itemCount: hits.length,
               //itemCount: 50, //임의로 테스트
               itemBuilder: (BuildContext context, index) {
-                Map<String, dynamic> image = hits![index];
+                Map<String, dynamic> image = hits[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
@@ -107,4 +137,6 @@ class _JsonStringState extends State<JsonString> {
 
     return hits;
   }
+
+  //Future<>
 }
