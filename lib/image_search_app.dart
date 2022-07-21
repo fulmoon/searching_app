@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'model/picture.dart';
 import 'model/images.dart';
 
-class JsonString extends StatefulWidget {
-  const JsonString({Key? key}) : super(key: key);
+class ImageSearchApp extends StatefulWidget {
+  const ImageSearchApp({Key? key}) : super(key: key);
 
   @override
-  State<JsonString> createState() => _JsonStringState();
+  State<ImageSearchApp> createState() => _ImageSearchAppState();
 }
 
-class _JsonStringState extends State<JsonString> {
+class _ImageSearchAppState extends State<ImageSearchApp> {
   TextEditingController _controller = TextEditingController();
   List<Picture> _images = [];
 
