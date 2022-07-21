@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:searching_app/json_string.dart';
+import 'package:searching_app/image_search_app.dart';
 
 void main() {
   runApp(const MyApp());

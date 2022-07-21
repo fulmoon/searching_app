@@ -95,7 +95,7 @@ class _JsonStringState extends State<JsonString> {
                   },
                 );
               },
-              obscureText: false,  // 글자가 보이게 안보이게... ** 로 표현
+              obscureText: false,  // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
 
             ),
           ),
