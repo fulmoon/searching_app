@@ -59,6 +59,19 @@ class _JsonStringState extends State<JsonString> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             //Appbar와 겹쳐 보이는 문제 발생.
             child: TextField(
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                labelText: 'Search',
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+              ),
               //샘플코드
               controller: _controller,
               onSubmitted: (String value) async {
@@ -82,19 +95,8 @@ class _JsonStringState extends State<JsonString> {
                   },
                 );
               },
-              obscureText: true,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                //border color 적용 안됨
-                //border: OutlineInputBorder(borderSide: Color(0xFF0000FF)),
-                labelText: 'Search',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.search),
-                ),
-              ),
+              obscureText: false,  // 글자가 보이게 안보이게... ** 로 표현
+
             ),
           ),
           Expanded(
