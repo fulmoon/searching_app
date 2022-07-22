@@ -13,7 +13,6 @@ class ImageSearchApp extends StatefulWidget {
 
 class _ImageSearchAppState extends State<ImageSearchApp> {
   TextEditingController _controller = TextEditingController();
-  List<Picture> _images = [];
 
   @override
   void initState() {
@@ -23,22 +22,9 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    initData();
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  Future initData() async {
-    _images = await getImages();
-
-    setState(() {});
   }
 
   @override
@@ -56,7 +42,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: const EdgeInsets.all(8),
             //Appbar와 겹쳐 보이는 문제 발생.
             child: TextField(
               decoration: InputDecoration(
@@ -100,27 +86,52 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-              ),
-              itemCount: _images.length,
-              //itemCount: 50, //임의로 테스트
-              itemBuilder: (BuildContext context, index) {
-                Picture image = _images[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.network(
-                      image.previewURL,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              },
-            ),
+            child: FutureBuilder<List<Picture>> (
+              future: getImages(),
+              builder: (context, snapshot) {
+                if(snapshot.hasError) {
+                  return const Center(
+                    child: Text('에러가 났습니다.'),
+                  );
+                }
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if(!snapshot.hasData){
+                  return const Center(
+                    child: Text('데이터가 없습니다.'),
+                  );
+                }
+                final images = snapshot.data!;
+
+                if (images.isEmpty){
+                  return const Center(
+                    child: Text('데이터가 비어 있습니다.'),
+                  );
+                }
+
+               return GridView.builder(
+                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                   crossAxisCount: 2,
+                   childAspectRatio: 1,
+                 ),
+                 itemCount: images.length,
+                 itemBuilder: (BuildContext context, index) {
+                   Picture image = images[index];
+                   return Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: ClipRRect(
+                       borderRadius: BorderRadius.circular(30),
+                       child: Image.network(
+                         image.previewURL,
+                         fit: BoxFit.cover,
+                       ),
+                     ),
+                   );
+                 },
+               );
+              }
+            )
           ),
         ],
       ),
@@ -135,5 +146,11 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
     Map<String, dynamic> json = jsonDecode(jsonString);
     Iterable hits = json['hits'];
     return hits.map((e) => Picture.fromJson(e)).toList();
+
+    //임의의 에러를 발생
+    //throw Exception('엄청난 에러');
+
+    //비어 있는(size = 0) 데이터 리턴
+    // return [];
   }
 }
