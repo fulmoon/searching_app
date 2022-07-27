@@ -12,14 +12,8 @@ class ImageSearchApp extends StatefulWidget {
 }
 
 class _ImageSearchAppState extends State<ImageSearchApp> {
-  TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller = TextEditingController();
-  }
+  final TextEditingController _controller = TextEditingController();
+  String _query = '';
 
   @override
   void dispose() {
@@ -45,6 +39,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             padding: const EdgeInsets.all(8),
             //Appbar와 겹쳐 보이는 문제 발생.
             child: TextField(
+              controller: _controller,
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.blue, width: 2),
@@ -53,13 +48,14 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                 labelText: 'Search',
                 suffixIcon: IconButton(
                   onPressed: () {
-                    setState(() {});
+                    print('클릭 ${_controller.text}');
+                    setState(() {
+                     _query = _controller.text;});
                   },
                   icon: const Icon(Icons.search),
                 ),
               ),
-              //샘플코드
-              controller: _controller,
+       
               onSubmitted: (String value) async {
                 await showDialog<void>(
                   context: context,
@@ -116,7 +112,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                     childAspectRatio: 1,
                   ),
                   children: images
-                      .where((e)=> e.tags.contains('watch') || e.tags.contains(('computer')))
+                      .where((e)=> e.tags.contains(_query))
                       .map((image) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
