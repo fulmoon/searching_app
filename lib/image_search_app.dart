@@ -89,49 +89,47 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             child: FutureBuilder<List<Picture>> (
               future: getImages(),
               builder: (context, snapshot) {
-                if(snapshot.hasError) {
+                if (snapshot.hasError) {
                   return const Center(
                     child: Text('에러가 났습니다.'),
                   );
                 }
-                if(snapshot.connectionState == ConnectionState.waiting){
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if(!snapshot.hasData){
+                if (!snapshot.hasData) {
                   return const Center(
                     child: Text('데이터가 없습니다.'),
                   );
                 }
                 final images = snapshot.data!;
 
-                if (images.isEmpty){
+                if (images.isEmpty) {
                   return const Center(
                     child: Text('데이터가 비어 있습니다.'),
                   );
                 }
 
-               return GridView.builder(
-                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                   crossAxisCount: 2,
-                   childAspectRatio: 1,
-                 ),
-                 itemCount: images.length,
-                 itemBuilder: (BuildContext context, index) {
-                   Picture image = images[index];
-                   return Padding(
-                     padding: const EdgeInsets.all(8.0),
-                     child: ClipRRect(
-                       borderRadius: BorderRadius.circular(30),
-                       child: Image.network(
-                         image.previewURL,
-                         fit: BoxFit.cover,
-                       ),
-                     ),
-                   );
-                 },
-               );
-              }
-            )
+                return GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                  ),
+                  children: images.map((image) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.network(
+                          image.previewURL,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
           ),
         ],
       ),
