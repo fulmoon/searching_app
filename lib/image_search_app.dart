@@ -115,7 +115,9 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                     crossAxisCount: 2,
                     childAspectRatio: 1,
                   ),
-                  children: images.map((image) {
+                  children: images
+                      .where((e)=> e.tags.contains('watch') || e.tags.contains(('computer')))
+                      .map((image) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
