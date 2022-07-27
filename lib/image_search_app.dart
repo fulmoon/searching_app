@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'model/picture.dart';
 import 'model/images.dart';
+import 'package:http/http.dart' as http;
 
 class ImageSearchApp extends StatefulWidget {
   const ImageSearchApp({Key? key}) : super(key: key);
@@ -135,9 +135,14 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
   }
 
   Future<List<Picture>> getImages() async {
-    await Future.delayed(const Duration(seconds: 2));
+    //await Future.delayed(const Duration(seconds: 2));
+    Uri url = Uri.parse('https://pixabay.com/api/?key=23092054-b36e9b0a8b519cdbc545308e7&q=apple&image_type=photo');
 
-    String jsonString = images;
+    http.Response response = await http.get(url);
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
+
+    String jsonString = response.body;
 
     Map<String, dynamic> json = jsonDecode(jsonString);
     Iterable hits = json['hits'];
