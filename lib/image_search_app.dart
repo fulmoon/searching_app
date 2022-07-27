@@ -37,7 +37,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8),
-            //Appbar와 겹쳐 보이는 문제 발생.
+            //AppBar 와 겹쳐 보이는 문제 발생.
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
@@ -48,7 +48,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                 labelText: 'Search',
                 suffixIcon: IconButton(
                   onPressed: () {
-                    print('클릭 ${_controller.text}');
+                    //print('클릭 ${_controller.text}');
                     setState(() {
                      _query = _controller.text;});
                   },
