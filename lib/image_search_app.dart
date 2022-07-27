@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'model/picture.dart';
-import 'model/images.dart';
+//import 'model/images.dart';
 import 'package:http/http.dart' as http;
 
 class ImageSearchApp extends StatefulWidget {
@@ -83,7 +83,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
           ),
           Expanded(
             child: FutureBuilder<List<Picture>> (
-              future: getImages(),
+              future: getImages(_query),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return const Center(
@@ -134,9 +134,9 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
     );
   }
 
-  Future<List<Picture>> getImages() async {
+  Future<List<Picture>> getImages(String query) async {
     //await Future.delayed(const Duration(seconds: 2));
-    Uri url = Uri.parse('https://pixabay.com/api/?key=23092054-b36e9b0a8b519cdbc545308e7&q=apple&image_type=photo');
+    Uri url = Uri.parse('https://pixabay.com/api/?key=23092054-b36e9b0a8b519cdbc545308e7&q=$query&image_type=photo');
 
     http.Response response = await http.get(url);
     //print('Response status: ${response.statusCode}');
