@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:searching_app/picture_api.dart';
+import 'package:searching_app/video_search_app.dart';
 
 import 'model/picture.dart';
 //import 'model/images.dart';
@@ -16,11 +17,29 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
   final _api = PictureApi();
   final TextEditingController _controller = TextEditingController();
   String _query = '';
+  int _selectedIndex = 0;
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if( index == 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ImageSearchApp()),
+        );
+      }else{
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const VideoSearchApp()),
+        );
+      }
+    });
   }
 
   @override
@@ -132,6 +151,23 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              label: 'images',
+              icon: Icon(Icons.image_search_outlined),
+              backgroundColor: Colors.green,
+            ),
+            BottomNavigationBarItem(
+              label: 'videos',
+              icon: Icon(Icons.video_collection),
+              backgroundColor: Colors.yellow,
+            ),
+          ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
