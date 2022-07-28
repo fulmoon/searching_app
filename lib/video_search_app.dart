@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:searching_app/image_search_app.dart';
 import 'package:searching_app/model/video_data.dart';
 import 'package:searching_app/video_api.dart';
+import 'package:searching_app/video_play_screen.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoSearchApp extends StatefulWidget {
   const VideoSearchApp({Key? key}) : super(key: key);
@@ -13,12 +15,15 @@ class VideoSearchApp extends StatefulWidget {
 class _VideoSearchAppState extends State<VideoSearchApp> {
   final _api = VideoApi();
   final TextEditingController _controller = TextEditingController();
+  late VideoPlayerController _videoPlayerController;
+
   String _query = '';
   int _selectedIndex = 0;
 
   @override
   void dispose() {
     _controller.dispose();
+    _videoPlayerController.dispose();
     super.dispose();
   }
 
@@ -111,19 +116,27 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                       .map((videoData) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
-                              fit: BoxFit.cover,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const VideoPlayScreen()),
+                            );
+                          },
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          const Center(
-                              child: Icon(Icons.play_circle, size: 40)
-                          ),
-                        ],
+                            const Center(
+                                child: Icon(Icons.play_circle, size: 40)
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }).toList(),
