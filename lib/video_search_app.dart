@@ -25,12 +25,12 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if( index == 0) {
+      if (index == 0) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ImageSearchApp()),
         );
-      }else{
+      } else {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const VideoSearchApp()),
@@ -68,7 +68,8 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                   onPressed: () {
                     //print('클릭 ${_controller.text}');
                     setState(() {
-                      _query = _controller.text;});
+                      _query = _controller.text;
+                    });
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -76,7 +77,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<VideoData>> (
+            child: FutureBuilder<List<VideoData>>(
               future: _api.getVideos(_query),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -106,7 +107,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                     childAspectRatio: 1.5,
                   ),
                   children: videoData
-                      .where((e)=> e.tags.contains(_query))
+                      .where((e) => e.tags.contains(_query))
                       .map((videoData) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),

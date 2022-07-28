@@ -1,4 +1,4 @@
-class VideoData{
+class VideoData {
   final int id;
   final int picture_id;
   final String tags;
