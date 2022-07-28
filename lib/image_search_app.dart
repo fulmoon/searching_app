@@ -156,17 +156,21 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
           items: const [
             BottomNavigationBarItem(
               label: 'images',
-              icon: Icon(Icons.image_search_outlined),
-              backgroundColor: Colors.green,
+              icon: Icon(
+                Icons.image_search_outlined,
+                color: Colors.red,
+              ),
             ),
             BottomNavigationBarItem(
               label: 'videos',
-              icon: Icon(Icons.video_collection),
-              backgroundColor: Colors.yellow,
+              icon: Icon(
+                Icons.video_collection,
+                color: Colors.blue,
+              ),
             ),
           ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        //selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
