@@ -111,12 +111,19 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                       .map((videoData) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
-                          fit: BoxFit.cover,
-                        ),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const Center(
+                              child: Icon(Icons.play_circle, size: 40)
+                          ),
+                        ],
                       ),
                     );
                   }).toList(),
