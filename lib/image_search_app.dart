@@ -66,7 +66,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                   borderSide: BorderSide(color: Colors.blue, width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                labelText: 'Search',
+                labelText: 'Search images',
                 suffixIcon: IconButton(
                   onPressed: () {
                     //print('클릭 ${_controller.text}');

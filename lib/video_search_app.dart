@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:searching_app/model/picture.dart';
-import 'package:searching_app/picture_api.dart';
-import 'package:searching_app/image_search_app.dart';
+import 'package:searching_app/model/video_data.dart';
+import 'package:searching_app/video_api.dart';
 
 class VideoSearchApp extends StatefulWidget {
   const VideoSearchApp({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class VideoSearchApp extends StatefulWidget {
 }
 
 class _VideoSearchAppState extends State<VideoSearchApp> {
-  final _api = PictureApi();
+  final _api = VideoApi();
   final TextEditingController _controller = TextEditingController();
   String _query = '';
   int _selectedIndex = 0;
@@ -28,7 +27,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
       if( index == 0) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ImageSearchApp()),
+          MaterialPageRoute(builder: (context) => const VideoSearchApp()),
         );
       }else{
         Navigator.push(
@@ -63,7 +62,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                   borderSide: BorderSide(color: Colors.blue, width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                labelText: 'Search',
+                labelText: 'Search video',
                 suffixIcon: IconButton(
                   onPressed: () {
                     //print('클릭 ${_controller.text}');
@@ -100,8 +99,8 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<Picture>> (
-              future: _api.getImages(_query),
+            child: FutureBuilder<List<VideoData>> (
+              future: _api.getVideos(_query),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return const Center(
@@ -116,9 +115,9 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                     child: Text('데이터가 없습니다.'),
                   );
                 }
-                final images = snapshot.data!;
+                final videoData = snapshot.data!;
 
-                if (images.isEmpty) {
+                if (videoData.isEmpty) {
                   return const Center(
                     child: Text('데이터가 비어 있습니다.'),
                   );
@@ -127,17 +126,17 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                 return GridView(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1,
+                    childAspectRatio: 1.5,
                   ),
-                  children: images
+                  children: videoData
                       .where((e)=> e.tags.contains(_query))
-                      .map((image) {
+                      .map((videoData) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          image.previewURL,
+                          'https://i.vimeocdn.com/video/$videoData.picture_id_295x166.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
