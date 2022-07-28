@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:searching_app/image_search_app.dart';
 import 'package:searching_app/model/video_data.dart';
 import 'package:searching_app/video_api.dart';
 
@@ -27,7 +28,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
       if( index == 0) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const VideoSearchApp()),
+          MaterialPageRoute(builder: (context) => const ImageSearchApp()),
         );
       }else{
         Navigator.push(
@@ -72,30 +73,6 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                   icon: const Icon(Icons.search),
                 ),
               ),
-
-              onSubmitted: (String value) async {
-                await showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Thanks!'),
-                      content: Text(
-                          'You typed "$value", which has length ${value.characters.length}.'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            //const CircularProgressIndicator();
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              obscureText: false,  // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
-
             ),
           ),
           Expanded(
@@ -136,7 +113,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          'https://i.vimeocdn.com/video/$videoData.picture_id_295x166.jpg',
+                          'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
