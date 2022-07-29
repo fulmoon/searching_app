@@ -44,6 +44,8 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -128,8 +130,8 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                 }
 
                 return GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
                     childAspectRatio: 1,
                   ),
                   children: images

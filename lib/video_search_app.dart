@@ -43,6 +43,8 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -104,8 +106,8 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                 }
 
                 return GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
                     childAspectRatio: 1.5,
                   ),
                   children: videoData
