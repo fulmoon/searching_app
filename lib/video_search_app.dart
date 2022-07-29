@@ -117,7 +117,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const VideoPlayScreen()),
+                              MaterialPageRoute(builder: (context) => VideoPlayScreen(videoData.videoUrl)),
                             );
                           },
                         child: Stack(

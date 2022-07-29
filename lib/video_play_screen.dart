@@ -4,22 +4,27 @@ import 'package:searching_app/video_search_app.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayScreen extends StatefulWidget {
-  const VideoPlayScreen({Key? key}) : super(key: key);
+  final String url;
+
+  const VideoPlayScreen(this.url, {Key? key}) : super(key: key);
 
   @override
-  State<VideoPlayScreen> createState() => _VideoPlayScreenState();
+  State<VideoPlayScreen> createState() => _VideoPlayScreenState(url);
 }
 
 class _VideoPlayScreenState extends State<VideoPlayScreen> {
   late VideoPlayerController _controller;
   int _selectedIndex = 0;
 
+  String videoUrl = '';
+
+  _VideoPlayScreenState(this.videoUrl);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+    _controller = VideoPlayerController.network(videoUrl)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
@@ -55,13 +60,15 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       appBar: AppBar(
         title: const Text('Vidoe Player'),
       ), //AppBar
-      body:  Center(
+      body: Center(
         child: _controller.value.isInitialized
             ? AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
                 child: VideoPlayer(_controller),
               )
-            : Container(),
+            : Center(
+                child: const CircularProgressIndicator(),
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
