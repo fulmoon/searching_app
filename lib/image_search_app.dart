@@ -5,7 +5,6 @@ import 'package:searching_app/video_search_app.dart';
 import 'model/picture.dart';
 //import 'model/images.dart';
 
-
 class ImageSearchApp extends StatefulWidget {
   const ImageSearchApp({Key? key}) : super(key: key);
 
@@ -28,12 +27,12 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if( index == 0) {
+      if (index == 0) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ImageSearchApp()),
         );
-      }else{
+      } else {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const VideoSearchApp()),
@@ -66,7 +65,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                     // color: Theme.of(context).colorScheme.primary,
+                    // color: Theme.of(context).colorScheme.primary,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -76,12 +75,13 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                   onPressed: () {
                     //print('클릭 ${_controller.text}');
                     setState(() {
-                     _query = _controller.text;});
+                      _query = _controller.text;
+                    });
                   },
                   icon: const Icon(Icons.search),
                 ),
               ),
-       
+
               onSubmitted: (String value) async {
                 await showDialog<void>(
                   context: context,
@@ -103,12 +103,11 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                   },
                 );
               },
-              obscureText: false,  // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
-
+              obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<Picture>> (
+            child: FutureBuilder<List<Picture>>(
               future: _api.getImages(_query),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -137,9 +136,8 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
                     crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
                     childAspectRatio: 1,
                   ),
-                  children: images
-                      .where((e)=> e.tags.contains(_query))
-                      .map((image) {
+                  children:
+                      images.where((e) => e.tags.contains(_query)).map((image) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
@@ -158,22 +156,22 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              label: 'images',
-              icon: Icon(
-                Icons.image_search_outlined,
-               // color: Colors.red,
-              ),
+        items: const [
+          BottomNavigationBarItem(
+            label: 'images',
+            icon: Icon(
+              Icons.image_search_outlined,
+              // color: Colors.red,
             ),
-            BottomNavigationBarItem(
-              label: 'videos',
-              icon: Icon(
-                Icons.video_collection,
-               // color: Colors.blue,
-              ),
+          ),
+          BottomNavigationBarItem(
+            label: 'videos',
+            icon: Icon(
+              Icons.video_collection,
+              // color: Colors.blue,
             ),
-          ],
+          ),
+        ],
         currentIndex: _selectedIndex,
         //selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
