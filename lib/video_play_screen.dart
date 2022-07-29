@@ -15,6 +15,18 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   int _selectedIndex = 0;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -43,10 +55,24 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       appBar: AppBar(
         title: const Text('Vidoe Player'),
       ), //AppBar
-      body: const Center(
-        child: Text(
-          "결과가 나올 부분",
-          style: TextStyle(fontSize: 40),
+      body:  Center(
+        child: _controller.value.isInitialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+            : Container(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _controller.value.isPlaying
+                ? _controller.pause()
+                : _controller.play();
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
