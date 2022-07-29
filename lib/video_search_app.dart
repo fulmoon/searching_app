@@ -50,9 +50,9 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
         centerTitle: true,
         title: const Text(
           '비디오 검색 앱',
-          style: TextStyle(color: Colors.black),
+          //style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       body: Column(
@@ -64,7 +64,10 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
               controller: _controller,
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                  borderSide: BorderSide(
+                    // color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 labelText: 'Search video',
@@ -116,12 +119,14 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => VideoPlayScreen(videoData.videoUrl)),
-                            );
-                          },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    VideoPlayScreen(videoData.videoUrl)),
+                          );
+                        },
                         child: Stack(
                           children: [
                             ClipRRect(
@@ -132,8 +137,7 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                               ),
                             ),
                             const Center(
-                                child: Icon(Icons.play_circle, size: 40)
-                            ),
+                                child: Icon(Icons.play_circle, size: 40)),
                           ],
                         ),
                       ),
@@ -151,14 +155,14 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
             label: 'images',
             icon: Icon(
               Icons.image_search_outlined,
-              color: Colors.blue,
+              // color: Colors.blue,
             ),
           ),
           BottomNavigationBarItem(
             label: 'videos',
             icon: Icon(
               Icons.video_collection,
-              color: Colors.red,
+              // color: Colors.red,
             ),
           ),
         ],

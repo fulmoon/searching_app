@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:searching_app/color_schemes.g.dart';
 import 'package:searching_app/image_search_app.dart';
 
 void main() {
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
       ),
       home: const ImageSearchApp(),
     );

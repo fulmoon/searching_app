@@ -51,9 +51,9 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
         centerTitle: true,
         title: const Text(
           '이미지 검색 앱',
-          style: TextStyle(color: Colors.black),
+          //style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       body: Column(
@@ -64,8 +64,11 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 labelText: 'Search images',
@@ -160,14 +163,14 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
               label: 'images',
               icon: Icon(
                 Icons.image_search_outlined,
-                color: Colors.red,
+               // color: Colors.red,
               ),
             ),
             BottomNavigationBarItem(
               label: 'videos',
               icon: Icon(
                 Icons.video_collection,
-                color: Colors.blue,
+               // color: Colors.blue,
               ),
             ),
           ],

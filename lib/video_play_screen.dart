@@ -90,14 +90,14 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
             label: 'images',
             icon: Icon(
               Icons.image_search_outlined,
-              color: Colors.blue,
+             // color: Colors.blue,
             ),
           ),
           BottomNavigationBarItem(
             label: 'videos',
             icon: Icon(
               Icons.video_collection,
-              color: Colors.red,
+             // color: Colors.red,
             ),
           ),
         ],
