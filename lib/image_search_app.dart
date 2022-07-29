@@ -64,9 +64,9 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
+                     // color: Theme.of(context).colorScheme.primary,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
