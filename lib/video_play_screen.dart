@@ -66,8 +66,8 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 aspectRatio: _controller.value.aspectRatio,
                 child: VideoPlayer(_controller),
               )
-            : Center(
-                child: const CircularProgressIndicator(),
+            : const Center(
+                child: CircularProgressIndicator(),
               ),
       ),
       floatingActionButton: FloatingActionButton(
