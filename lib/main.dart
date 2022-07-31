@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searching_app/color_schemes.g.dart';
 //import 'package:searching_app/counter_stream/counter_stream_app.dart';
-import 'package:searching_app/image_search_app.dart';
+import 'package:searching_app/searching_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
-      home: const ImageSearchApp(),
+      home: const SearchingApp(),
     );
   }
 }
