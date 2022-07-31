@@ -35,6 +35,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   @override
   Widget build(BuildContext context) {
     //final orientation = MediaQuery.of(context).orientation;
+    //final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +56,9 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 // Use the VideoPlayer widget to display the video.
                 child: GestureDetector(
                   onTap: () {
-                    _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
                   },
                   child: VideoPlayer(_controller),
                 ),
@@ -64,9 +67,9 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
+          _controller.value.isPlaying
+              ? _controller.pause()
+              : _controller.play();
         },
         child: Icon(
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,

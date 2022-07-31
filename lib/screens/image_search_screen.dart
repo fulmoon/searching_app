@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:searching_app/model/picture.dart';
 import 'package:searching_app/picture_api.dart';
 
+import 'package:google_fonts/google_fonts.dart';
 
 class ImageSearchScreen extends StatefulWidget {
   const ImageSearchScreen({Key? key}) : super(key: key);
@@ -28,18 +29,18 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           '이미지 검색 앱',
-          //style: TextStyle(color: Colors.black),
+          style: GoogleFonts.lato(),
         ),
         //backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8),
-            //AppBar 와 겹쳐 보이는 문제 발생.
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
@@ -69,12 +70,16 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                     return AlertDialog(
                       title: const Text('Thanks!'),
                       content: Text(
-                          'You typed "$value", which has length ${value.characters.length}.'),
+                        'You typed "$value", which has length ${value.characters.length}.',
+                        style: GoogleFonts.lato(),
+                      ),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);
-                            //const CircularProgressIndicator();
+                            setState(() {
+                              _query = _controller.text;
+                            });
                           },
                           child: const Text('OK'),
                         ),
@@ -86,7 +91,11 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
               obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
             ),
           ),
-           Expanded(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('결과: ', style: Theme.of(context).textTheme.titleLarge,),
+          ),
+          Expanded(
             child: FutureBuilder<List<Picture>>(
               future: _api.getImages(_query),
               builder: (context, snapshot) {
