@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:searching_app/components/video_thumbnail.dart';
 import 'package:searching_app/image_search_app.dart';
 import 'package:searching_app/model/video_data.dart';
 import 'package:searching_app/video_api.dart';
@@ -127,18 +128,8 @@ class _VideoSearchAppState extends State<VideoSearchApp> {
                                     VideoPlayScreen(videoData.videoUrl)),
                           );
                         },
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                'https://i.vimeocdn.com/video/${videoData.picture_id}_295x166.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const Center(
-                                child: Icon(Icons.play_circle, size: 40)),
-                          ],
+                        child: VideoThumbnail(
+                          videoData: videoData,
                         ),
                       ),
                     );

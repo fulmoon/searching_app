@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:searching_app/image_search_app.dart';
-import 'package:searching_app/video_search_app.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayScreen extends StatefulWidget {
@@ -14,7 +12,8 @@ class VideoPlayScreen extends StatefulWidget {
 
 class _VideoPlayScreenState extends State<VideoPlayScreen> {
   late VideoPlayerController _controller;
-  int _selectedIndex = 0;
+
+  //int _selectedIndex = 0;
 
   String videoUrl = '';
 
@@ -24,11 +23,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = VideoPlayerController.network(videoUrl)
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
+    _controller = VideoPlayerController.network(videoUrl);
   }
 
   @override
@@ -37,40 +32,35 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
     super.dispose();
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      if (index == 0) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ImageSearchApp()),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const VideoSearchApp()),
-        );
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     //final orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vidoe Player'),
+        title: const Text('Video Player'),
       ), //AppBar
-      body: Center(
-        child: _controller.value.isInitialized
-            ? AspectRatio(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder(
+            future: _controller.initialize(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
-              )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+                // Use the VideoPlayer widget to display the video.
+                child: GestureDetector(
+                  onTap: () {
+                    _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                  },
+                  child: VideoPlayer(_controller),
+                ),
+              );
+            }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -83,27 +73,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
         child: Icon(
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            label: 'images',
-            icon: Icon(
-              Icons.image_search_outlined,
-             // color: Colors.blue,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: 'videos',
-            icon: Icon(
-              Icons.video_collection,
-             // color: Colors.red,
-            ),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        //selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
       ),
     );
   }

@@ -106,7 +106,7 @@ class _ImageSearchAppState extends State<ImageSearchApp> {
               obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
             ),
           ),
-          Expanded(
+           Expanded(
             child: FutureBuilder<List<Picture>>(
               future: _api.getImages(_query),
               builder: (context, snapshot) {
