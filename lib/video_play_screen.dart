@@ -46,11 +46,21 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
         child: FutureBuilder(
             future: _controller.initialize(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.hasError) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('에러가 났습니다.'),
                 );
               }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (_controller.value.hasError) {
+                return const Center(
+                  child: Text('데이터가 비어 있습니다.'),
+                );
+              }
+
               return AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
                 // Use the VideoPlayer widget to display the video.
