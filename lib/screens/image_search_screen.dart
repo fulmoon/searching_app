@@ -62,7 +62,6 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   icon: const Icon(Icons.search),
                 ),
               ),
-
               onSubmitted: (String value) async {
                 await showDialog<void>(
                   context: context,
@@ -91,10 +90,10 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
               obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('결과: ', style: Theme.of(context).textTheme.titleLarge,),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Text('결과: ', style: Theme.of(context).textTheme.titleLarge,),
+          // ),
           Expanded(
             child: FutureBuilder<List<Picture>>(
               future: _api.getImages(_query),

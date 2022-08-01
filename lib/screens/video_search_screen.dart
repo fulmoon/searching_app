@@ -63,6 +63,11 @@ class _VideoSearchScreenState extends State<VideoSearchScreen> {
                   icon: const Icon(Icons.search),
                 ),
               ),
+              onEditingComplete: () {
+                setState(() {
+                  _query = _controller.text;
+                });
+              },
             ),
           ),
           Expanded(
