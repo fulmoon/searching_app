@@ -3,10 +3,11 @@ import 'dart:convert';
 
 import 'package:searching_app/model/picture.dart';
 import 'package:http/http.dart' as http;
-import 'package:searching_app/picture_api.dart';
+
+//PictureApi의 스트림 버전
 
 class PictureStreamApi{
-  PictureApi() {
+  PictureStreamApi() {
     fetchImages('');
   }
   //final List<Picture> _url = [];
