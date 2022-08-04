@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searching_app/model/picture.dart';
-import 'package:searching_app/picture_api.dart';
-
+//import 'package:searching_app/picture_api.dart';
+import 'package:searching_app/picture_stream_api.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ImageSearchScreen extends StatefulWidget {
@@ -12,7 +12,8 @@ class ImageSearchScreen extends StatefulWidget {
 }
 
 class _ImageSearchScreenState extends State<ImageSearchScreen> {
-  final _api = PictureApi();
+  //final _api = PictureApi();
+  final _pictureApi = PictureStreamApi();
   final TextEditingController _controller = TextEditingController();
   String _query = '';
 
@@ -43,6 +44,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
             padding: const EdgeInsets.all(8),
             child: TextField(
               controller: _controller,
+              obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
@@ -56,7 +58,8 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   onPressed: () {
                     //print('클릭 ${_controller.text}');
                     setState(() {
-                      _query = _controller.text;
+                      //_query = _controller.text;
+                      _pictureApi.fetchImages(_controller.text);
                     });
                   },
                   icon: const Icon(Icons.search),
@@ -87,16 +90,12 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   },
                 );
               },
-              obscureText: false, // 글자가 보이게(ture) 안보이게(false) - *** 로 표현
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Text('결과: ', style: Theme.of(context).textTheme.titleLarge,),
-          // ),
           Expanded(
-            child: FutureBuilder<List<Picture>>(
-              future: _api.getImages(_query),
+            child: StreamBuilder<List<Picture>>(
+              stream: _pictureApi.imagesStream,
+              initialData: const [],
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return const Center(
@@ -125,7 +124,8 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                     childAspectRatio: 1,
                   ),
                   children:
-                      images.where((e) => e.tags.contains(_query)).map((image) {
+                      //images.where((e) => e.tags.contains(_query)).map((image) {
+                      images.map((Picture image) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(

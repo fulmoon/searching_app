@@ -3,14 +3,22 @@ import 'dart:convert';
 
 import 'package:searching_app/model/picture.dart';
 import 'package:http/http.dart' as http;
+import 'package:searching_app/picture_api.dart';
 
 class PictureStreamApi{
+  PictureApi() {
+    fetchImages('');
+  }
   //final List<Picture> _url = [];
 
-  final _pictureStreamController = StreamController<List<Picture>>();
+  final _imagesStreamController = StreamController<List<Picture>>();
 
-  Stream<List<Picture>> get pictureStream => _pictureStreamController.stream;
+  Stream<List<Picture>> get imagesStream => _imagesStreamController.stream;
 
+  Future fetchImages(String query) async {
+    List<Picture> images = await getImages(query);
+    _imagesStreamController.add(images);
+  }
 
   Future<List<Picture>> getImages(String query) async {
     //await Future.delayed(const Duration(seconds: 2));
@@ -25,7 +33,7 @@ class PictureStreamApi{
     Map<String, dynamic> json = jsonDecode(jsonString);
     Iterable hits = json['hits'];
 
-    _pictureStreamController.add(hits.map((e) => Picture.fromJson(e)).toList());
+    //_pictureStreamController.add(hits.map((e) => Picture.fromJson(e)).toList());    // Usw 처음 시도한 스트림
 
     return hits.map((e) => Picture.fromJson(e)).toList();
 
