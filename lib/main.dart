@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:searching_app/color_schemes.g.dart';
+import 'package:searching_app/image_search_view_model.dart';
+
 //import 'package:searching_app/counter_stream/counter_stream_app.dart';
 import 'package:searching_app/searching_app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ImageSearchViewModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
