@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:searching_app/color_schemes.g.dart';
 import 'package:searching_app/image_search_view_model.dart';
-
-//import 'package:searching_app/counter_stream/counter_stream_app.dart';
-import 'package:searching_app/searching_app.dart';
+import 'package:searching_app/ui/main_screen.dart';
+import 'package:searching_app/ui/main_view_model.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ImageSearchViewModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ImageSearchViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MainViewModel(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -35,7 +41,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
-      home: const SearchingApp(),
+      home: ChangeNotifierProvider(
+        create: (BuildContext context) => MainViewModel(),
+          child: const MainScreen(),
+      ),
     );
   }
 }
