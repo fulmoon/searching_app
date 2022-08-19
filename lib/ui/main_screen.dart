@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:searching_app/model/photo.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:searching_app/ui/main_action.dart';
 import 'package:searching_app/ui/main_view_model.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,6 +27,8 @@ class _MainScreenState extends State<MainScreen> {
     final viewModel = context.watch<MainViewModel>();
 
     final orientation = MediaQuery.of(context).orientation;
+
+    final state = viewModel.state;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,27 +60,29 @@ class _MainScreenState extends State<MainScreen> {
                 suffixIcon: IconButton(
                   onPressed: () {
                     //print('클릭 ${_controller.text}');
-                    context.read<MainViewModel>().fetchImages(_controller.text);
+                    //context.read<MainViewModel>().fetchImages(_controller.text);
+                    viewModel.onAction(const MainAction.addAction());
                   },
                   icon: const Icon(Icons.search),
                 ),
               ),
               onSubmitted: (String value) async {
-                context.read<MainViewModel>().fetchImages(_controller.text);
+                //context.read<MainViewModel>().fetchImages(_controller.text);
+                viewModel.onAction(const MainAction.addAction());
               },
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: viewModel.isLoading
+              child: state.isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : GridView(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
                   childAspectRatio: 1,
                 ),
-                children: viewModel.photos.map((Photo image) {
+                children: state.photos.map((Photo image) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: Image.network(
