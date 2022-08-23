@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:searching_app/model/photo.dart';
+import 'package:searching_app/data/model/photo.dart';
 import 'package:http/http.dart' as http;
 
 class PixabayApi {
@@ -11,7 +11,7 @@ class PixabayApi {
 
     http.Response response = await http.get(url);
     //print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
+    // print('Response body: ${response.body}');
 
     String jsonString = response.body;
 

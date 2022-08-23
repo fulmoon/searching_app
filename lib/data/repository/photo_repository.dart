@@ -1,5 +1,5 @@
 import 'package:searching_app/data/data_source/pixabay_api.dart';
-import 'package:searching_app/model/photo.dart';
+import 'package:searching_app/data/model/photo.dart';
 
 class PhotoRepository {
   final _api = PixabayApi();
